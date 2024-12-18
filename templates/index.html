@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST" action="{{ url_for('index') }}">
+        <textarea name="content" placeholder="내용을 입력하세요..." required></textarea>
+        <button type="submit">게시</button>
+    </form>
+
+    <h2>게시글 목록</h2>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{{ url_for('post_detail', post_id=post['id']) }}">
+                    {{ post['content'][:50] }}{% if post['content']|length > 50 %}...{% endif %}
+                </a>
+                <span>{{ post['timestamp'] }}</span>
+            </li>
+        {% else %}
+            <li>게시글이 없습니다.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
